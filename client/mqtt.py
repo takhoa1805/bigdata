@@ -30,7 +30,7 @@ def on_message(client, userdata, msg):
     #     print('Temperature:', temperature)
     #     print('\n' * 3)
 
-    if wind_speed and (wind_speed) > 99 and pressure and pressure > 999:
+    if wind_speed and (wind_speed) > 90 and pressure and pressure > 990:
         print(f'Alert: High wind speed detected at station {station_id}')
         print('Wind Speed:', wind_speed)
         print('Pressure:', pressure)
