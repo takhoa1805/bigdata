@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  spark-master:
+    image: bitnami/spark:latest
+    container_name: spark-master
+    hostname: spark-master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_MASTER_PORT=8077
+      - SPARK_MASTER_WEBUI_PORT=9080
+    ports:
+      - "9080:9080"  # Spark master web UI
+      - "8077:8077"  # Spark master port for workers
+    networks:
+      - spark-network
+
+  spark-worker:
+    image: bitnami/spark:latest
+    container_name: spark-worker
+    hostname: spark-worker
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:8077
+      - SPARK_WORKER_WEBUI_PORT=9081
+    ports:
+      - "9081:9081"  # Spark worker web UI
+    depends_on:
+      - spark-master
+    networks:
+      - spark-network
+
+  spark-worker-2:
+    image: bitnami/spark:latest
+    container_name: spark-worker-2
+    hostname: spark-worker-2
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:8077
+      - SPARK_WORKER_WEBUI_PORT=9082
+    ports:
+      - "9082:9082"  # Second Spark worker web UI
+    depends_on:
+      - spark-master
+    networks:
+      - spark-network
+
+networks:
+  spark-network:
+    driver: bridge
