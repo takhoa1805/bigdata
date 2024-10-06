@@ -3,14 +3,16 @@ const client = mqtt.connect("http://127.0.0.1:1883");
 
 // Simulating data publishing from thousands of weather stations
 function publishWeatherData(stationId) {
+
     const data = {
         stationId: stationId,
         timestamp: Date.now(),
-        temperature: (Math.random() * 45).toFixed(2),  // Simulating temperature between 0 and 40 degrees Celsius
-        humidity: (Math.random() * 100).toFixed(2),    // Humidity percentage
-        windSpeed: (Math.random() * 100).toFixed(2),    // Wind speed in km/h
-        pressure: (Math.random() * 20 + 980).toFixed(2) // Atmospheric pressure in hPa (980-1000)
+        temperature: parseFloat((Math.random() * 45).toFixed(2)),  // Simulating temperature between 0 and 40 degrees Celsius
+        humidity: parseFloat((Math.random() * 100).toFixed(2)),    // Humidity percentage
+        windSpeed: parseFloat((Math.random() * 100).toFixed(2)),    // Wind speed in km/h
+        pressure: parseFloat((Math.random() * 20 + 980).toFixed(2)) // Atmospheric pressure in hPa (980-1000)
     };
+    
 
     const topic = `weather/stations/${stationId}`;
     const message = JSON.stringify(data);

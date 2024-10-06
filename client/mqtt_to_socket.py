@@ -25,9 +25,17 @@ def mqtt_to_socket():
     # MQTT callback for message received
     def on_message(client, userdata, msg):
         message = msg.payload.decode()
-        # print(f"Received MQTT message: {message}")
-        # Send the message to the socket
-        client_socket.send(f"{message}\n".encode())
+        try:
+            # Attempt to send the message to the socket
+            client_socket.send(f"{message}\n".encode())
+        except BrokenPipeError:
+            print("Socket connection lost. Unable to send message.")
+            client_socket.close()
+            sys.exit(1)
+        except Exception as e:
+            print(f"Error sending message to socket: {e}")
+            client_socket.close()
+            sys.exit(1)
 
     # MQTT callback for connection
     def on_connect(client, userdata, flags, rc):
