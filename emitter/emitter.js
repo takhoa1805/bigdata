@@ -29,7 +29,7 @@ setInterval(() => {
     for (let i = 1; i <= 10000; i++) {
         publishWeatherData(i);
     }
-}, 2000);
+}, 3000);
 
 // Handle MQTT connection events
 client.on('connect', () => {
