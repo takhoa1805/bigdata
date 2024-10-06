@@ -1,9 +1,15 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-# Your Telegram Bot token
-TELEGRAM_BOT_TOKEN = "7390742205:AAHS0O4Wg_HGAJqayqfM3JydiBn15vMK6m4"
-# The chat ID you want to send the alert to (you can use your chat ID or a group ID)
-TELEGRAM_CHAT_ID = "6277250653"
+env_path = './.env'
+load_dotenv(dotenv_path=env_path)
+
+
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
+
 
 def alert(message):
     """
